@@ -14,36 +14,7 @@
 
 package org.digieng.voltagedivider
 
-import javafx.application.Application
-import javafx.fxml.FXMLLoader
-import javafx.scene.Scene
-import javafx.scene.layout.VBox
-import javafx.stage.Stage
+import org.digieng.voltagedivider.view.MainWindowView
+import tornadofx.App
 
-class VoltageDividerApplication : Application() {
-    private lateinit var primaryStage: Stage
-
-    companion object {
-        @JvmStatic
-        fun main(args: Array<String>) {
-            launch(VoltageDividerApplication::class.java, *args)
-        }
-    }
-
-    override fun start(primaryStage: Stage) {
-        this.primaryStage = primaryStage
-        this.primaryStage.title = "Voltage Divider"
-        initView()
-        primaryStage.show()
-    }
-
-    private fun initView() {
-        val FXML_PATH = "/view/main_window.fxml"
-        val loader = FXMLLoader()
-        val rootLayout: VBox
-
-        loader.location = VoltageDividerApplication::class.java.getResource(FXML_PATH)
-        rootLayout = loader.load()
-        primaryStage.scene = Scene(rootLayout)
-    }
-}
+class VoltageDividerApplication : App(primaryView = MainWindowView::class) {}

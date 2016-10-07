@@ -12,14 +12,15 @@
  * limitations under the License.
  */
 
-package org.digieng.voltagedivider
+package org.digieng.voltagedivider.view
 
-import javafx.fxml.FXML
 import javafx.scene.control.Button
 import javafx.scene.control.Control
 import javafx.scene.control.TextField
+import javafx.scene.layout.VBox
 import org.controlsfx.validation.ValidationResult
 import org.controlsfx.validation.ValidationSupport
+import tornadofx.View
 
 fun String.isDouble(): Boolean {
     var result = true
@@ -36,20 +37,15 @@ fun String.isDouble(): Boolean {
 
 fun TextField.doubleValue() = this.text.toDouble()
 
-class MainWindowController {
-    @FXML
-    private lateinit var inputVoltageTxt: TextField
-    @FXML
-    private lateinit var outputVoltageTxt: TextField
-    @FXML
-    private lateinit var resistance1Txt: TextField
-    @FXML
-    private lateinit var resistance2Txt: TextField
-    @FXML
-    private lateinit var calculateBtn: Button
+class MainWindowView : View("Voltage Divider") {
+    override val root: VBox by fxml("/view/main_window.fxml")
+    private val inputVoltageTxt: TextField by fxid()
+    private val outputVoltageTxt: TextField by fxid()
+    private val resistance1Txt: TextField by fxid()
+    private val resistance2Txt: TextField by fxid()
+    private val calculateBtn: Button by fxid()
 
-    @FXML
-    private fun initialize() {
+    init {
         val NUM_MSG = "A valid number must be entered"
         val validation = ValidationSupport()
         val doubleValidator = { control: Control, newVal: String ->
@@ -67,8 +63,7 @@ class MainWindowController {
         }
     }
 
-    @FXML
-    private fun clearTextFields() {
+    fun clearTextFields() {
         inputVoltageTxt.clear()
         outputVoltageTxt.clear()
         resistance1Txt.clear()
@@ -76,8 +71,7 @@ class MainWindowController {
         inputVoltageTxt.requestFocus()
     }
 
-    @FXML
-    private fun doCalculation() {
+    fun doCalculation() {
         if (outputVoltageTxt.text.isEmpty() && inputVoltageTxt.text.isNotEmpty() && resistance1Txt.text.isNotEmpty() &&
                 resistance2Txt.text.isNotEmpty()) {
             calculateOutputVoltage()

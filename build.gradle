@@ -2,11 +2,10 @@ group 'org.digieng.voltagedivider'
 version '0.1-SNAPSHOT'
 
 buildscript {
-    ext.kotlin_version = '1.0.4'
-
     repositories {
         mavenCentral()
     }
+
     dependencies {
         classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.0.4'
         classpath 'de.dynamicfiles.projects.gradle.plugins:javafx-gradle-plugin:8.7.0'
@@ -24,6 +23,7 @@ repositories {
 dependencies {
     compile 'org.jetbrains.kotlin:kotlin-stdlib:1.0.4'
     compile 'org.controlsfx:controlsfx:8.40.12'
+    compile 'no.tornado:tornadofx:1.5.6'
 }
 
 // A Task to run the program.
