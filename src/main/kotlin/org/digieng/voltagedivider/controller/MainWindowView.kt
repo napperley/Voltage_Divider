@@ -12,14 +12,13 @@
  * limitations under the License.
  */
 
-package org.digieng.voltagedivider.view
+package org.digieng.voltagedivider.controller
 
 import javafx.scene.control.Button
-import javafx.scene.control.Control
 import javafx.scene.control.TextField
 import javafx.scene.layout.VBox
-import org.controlsfx.validation.ValidationResult
 import org.controlsfx.validation.ValidationSupport
+import org.controlsfx.validation.Validator
 import tornadofx.View
 
 fun String.isDouble(): Boolean {
@@ -46,18 +45,14 @@ class MainWindowView : View("Voltage Divider") {
     private val calculateBtn: Button by fxid()
 
     init {
-        val NUM_MSG = "A valid number must be entered"
         val validation = ValidationSupport()
-        val doubleValidator = { control: Control, newVal: String ->
-            ValidationResult.fromErrorIf(
-                    control, NUM_MSG, if (control is TextField) !control.text.isDouble() else false
-            )
-        }
+        val maxLengthValidator = TextFieldValidator.maxLengthValidator
+        val doubleValidator = TextFieldValidator.doubleValidator
 
-        validation.registerValidator(inputVoltageTxt, false, doubleValidator)
-        validation.registerValidator(outputVoltageTxt, false, doubleValidator)
-        validation.registerValidator(resistance1Txt, false, doubleValidator)
-        validation.registerValidator(resistance2Txt, false, doubleValidator)
+        validation.registerValidator(inputVoltageTxt, false, Validator.combine(maxLengthValidator, doubleValidator))
+        validation.registerValidator(outputVoltageTxt, false, Validator.combine(maxLengthValidator, doubleValidator))
+        validation.registerValidator(resistance1Txt, false, Validator.combine(maxLengthValidator, doubleValidator))
+        validation.registerValidator(resistance2Txt, false, Validator.combine(maxLengthValidator, doubleValidator))
         validation.validationResultProperty().addListener { o, oldVal, newVal ->
             calculateBtn.isDisable = newVal.errors.isNotEmpty()
         }

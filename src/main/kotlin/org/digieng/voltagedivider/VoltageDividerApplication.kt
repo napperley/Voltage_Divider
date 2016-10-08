@@ -14,7 +14,7 @@
 
 package org.digieng.voltagedivider
 
-import org.digieng.voltagedivider.view.MainWindowView
+import org.digieng.voltagedivider.controller.MainWindowView
 import tornadofx.App
 
 class VoltageDividerApplication : App(primaryView = MainWindowView::class) {}
